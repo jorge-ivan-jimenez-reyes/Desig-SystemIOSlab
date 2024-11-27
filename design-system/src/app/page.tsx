@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiUserPlus } from "react-icons/fi"; // Icono de usuario
 import Sidebar from "@/components/sidebar/sidebar";
+import Link from "next/link";
 
 export default function Home() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -25,6 +26,14 @@ export default function Home() {
         >
           <FiMenu size={24} />
         </button>
+
+        {/* User Registration Button */}
+        <Link
+          href="/paginas/register"
+          className="absolute top-4 right-4 bg-green-500 hover:bg-green-700 text-white p-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-green-300"
+        >
+          <FiUserPlus size={24} />
+        </Link>
 
         {/* Content */}
         <div className="max-w-4xl mx-auto text-center mt-10 space-y-10">
