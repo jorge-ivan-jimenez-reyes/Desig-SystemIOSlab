@@ -45,6 +45,22 @@ export default function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
               Tipografía
             </a>
           </li>
+          {/* Agregar el enlace de la página de Estilos */}
+          <li>
+            <a href="/paginas/styles" className="text-gray-300 hover:text-white">
+              Estilos
+            </a>
+          </li>
+          <li>
+    <a href="/paginas/typography" className="text-gray-300 hover:text-white">
+      Tipografía
+    </a>
+  </li>
+  <li>
+            <a href="/paginas/custom-component" className="text-gray-300 hover:text-white">
+              Crea tu Componente
+            </a>
+          </li>
         </ul>
       </div>
     </div>
