@@ -28,18 +28,21 @@ app.use("/api/components", componentRoutes);
 app.use("/api/styles", styleRoutes);
 
 // Ruta Proxy para Colormind API
-app.post("/api/colormind", async (req, res) => {
+
+app.get("/api/colors", async (req, res) => {
     try {
-      const axios = require("axios");
-      const response = await axios.post("http://colormind.io/api/", req.body);
-      res.json(response.data);
+      const response = await axios.get(
+        `https://www.thecolorapi.com/scheme?hex=${req.query.hex || "F55A42"}&mode=${req.query.mode || "monochrome"}&count=${req.query.count || 5}`
+      );
+      res.status(200).json(response.data);
     } catch (error) {
-      res.status(500).json({ error: "Error fetching palette from Colormind" });
+      console.error("Error fetching colors:", error.message);
+      res.status(500).json({ error: "Error al obtener colores." });
     }
   });
-
+  
 // Puerto y servidor
-const port = process.env.PORT || 5555;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
+  console.log(`Servidor corriendo en http://0.0.0.0:3000:${port}`);
 });
