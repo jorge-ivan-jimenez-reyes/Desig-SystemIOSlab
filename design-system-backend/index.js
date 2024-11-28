@@ -9,14 +9,34 @@ const styleRoutes = require("./routes/styles");
 
 const app = express();
 
+// Configurar CORS
+app.use(
+    cors({
+      origin: "http://localhost:3000", // Permitir solicitudes desde el frontend
+      methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+      allowedHeaders: ["Content-Type"], // Encabezados permitidos
+    })
+  );
+  
+
 // Middleware
-app.use(cors());
-app.use(express.json()); // Usar express.json() en lugar de body-parser
+app.use(express.json());
 
 // Rutas
 app.use("/api/users", userRoutes);
 app.use("/api/components", componentRoutes);
 app.use("/api/styles", styleRoutes);
+
+// Ruta Proxy para Colormind API
+app.post("/api/colormind", async (req, res) => {
+    try {
+      const axios = require("axios");
+      const response = await axios.post("http://colormind.io/api/", req.body);
+      res.json(response.data);
+    } catch (error) {
+      res.status(500).json({ error: "Error fetching palette from Colormind" });
+    }
+  });
 
 // Puerto y servidor
 const port = process.env.PORT || 5555;
