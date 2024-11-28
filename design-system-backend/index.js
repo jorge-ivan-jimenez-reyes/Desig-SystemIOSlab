@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
+const axios = require("axios");
 // Importar rutas
 const userRoutes = require("./routes/users");
 const componentRoutes = require("./routes/components");
@@ -12,7 +12,7 @@ const app = express();
 // Configurar CORS
 app.use(
     cors({
-      origin: "http://localhost:3000", // Permitir solicitudes desde el frontend
+      origin: ["http://localhost:3000", "https://main.d3tuxl8t84e47y.amplifyapp.com", "https://jorgejimenezdev.com"], // Ajusta según tu dominio
       methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
       allowedHeaders: ["Content-Type"], // Encabezados permitidos
     })
