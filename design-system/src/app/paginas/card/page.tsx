@@ -19,13 +19,15 @@ export default function CardPage() {
   useEffect(() => {
     const fetchComponents = async () => {
       try {
-        const response = await fetch("http://54.163.223.205:3002/api/components"); // Cambié a una URL absoluta
+        const response = await fetch("/api/components"); // Usamos la URL relativa
+
         if (!response.ok) {
           throw new Error(`Error al obtener los datos: ${response.statusText}`);
         }
+
         const data = await response.json();
         setComponents(data);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error al obtener los componentes:", error);
         setError("No se pudieron cargar los componentes. Intenta nuevamente.");
       } finally {
