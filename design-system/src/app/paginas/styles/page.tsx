@@ -2,16 +2,25 @@
 
 import { useState, useEffect } from "react";
 
-export default function StylesPage() {
-  const [styles, setStyles] = useState<any[]>([]);
+interface Style {
+  id: number;
+  name: string;
+  description: string;
+  value: string;
+  type: string;
+  created_at: string;
+  updated_at: string;
+}
 
-  // Hacer la solicitud para obtener los estilos desde la API
+export default function StylesPage() {
+  const [styles, setStyles] = useState<Style[]>([]);
+
   useEffect(() => {
     const fetchStyles = async () => {
       try {
-        const response = await fetch("http://localhost:5555/api/styles");
+        const response = await fetch("http://54.163.223.205:3000/api/styles");
         const data = await response.json();
-        setStyles(data); // Establecer los estilos obtenidos en el estado
+        setStyles(data);
       } catch (error) {
         console.error("Error al obtener los estilos:", error);
       }
@@ -30,46 +39,27 @@ export default function StylesPage() {
           Explora los estilos de diseño aplicados a los componentes de la interfaz.
         </p>
 
-        {/* Filtros para los estilos */}
-        <div className="mb-10">
-          <button className="bg-[#1e3a8a] hover:bg-[#334155] text-white py-2 px-4 rounded-lg mr-4">
-            Filtrar por Color
-          </button>
-          <button className="bg-[#1e3a8a] hover:bg-[#334155] text-white py-2 px-4 rounded-lg">
-            Filtrar por Tipografía
-          </button>
-        </div>
-
-        {/* Estilos dinámicos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {styles.length > 0 ? (
             styles.map((style) => (
               <div
                 key={style.id}
-                className="bg-[#1e293b] p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out border border-[#1e3a8a]"
+                className="bg-[#1e293b] p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#1e3a8a]"
               >
-                <h2 className="text-2xl font-semibold text-[#00baff] hover:text-white transition-colors duration-300">
+                <h2 className="text-2xl font-semibold text-[#00baff] hover:text-white transition-colors">
                   {style.name}
                 </h2>
                 <p className="text-sm text-gray-200 mt-2">{style.description}</p>
 
-                {/* Mostrar el valor del estilo */}
-                <div className="mt-4">
-                  <span className="text-xs text-gray-300">{`Valor: ${style.value}`}</span>
-                </div>
-
-                {/* Mostrar el tipo de estilo */}
-                <div className="mt-2 text-xs text-gray-300">
+                <div className="mt-4 text-xs text-gray-300">
                   <p>{`Tipo: ${style.type}`}</p>
+                  <p>{`Valor: ${style.value}`}</p>
                 </div>
-
-                {/* Mostrar fecha de creación */}
-                <div className="mt-2 text-xs text-gray-300">
+                <div className="mt-4 text-xs text-gray-300">
                   <p>{`Creado: ${new Date(style.created_at).toLocaleString()}`}</p>
                   <p>{`Actualizado: ${new Date(style.updated_at).toLocaleString()}`}</p>
                 </div>
 
-                {/* Vista previa del estilo (solo si es color) */}
                 {style.type === "Color" && (
                   <div
                     className="mt-4 p-4 rounded-lg"
@@ -79,11 +69,10 @@ export default function StylesPage() {
                   </div>
                 )}
 
-                {/* Botón de acción */}
                 <div className="mt-6">
                   <a
-                    href={`/paginas/styles/${style.id}`} // Enlace a la vista detallada del estilo
-                    className="inline-block text-[#00baff] hover:text-white font-semibold border border-[#00baff] py-2 px-4 rounded-full transition-all duration-300"
+                    href={`/paginas/styles/${style.id}`}
+                    className="inline-block text-[#00baff] hover:text-white font-semibold border border-[#00baff] py-2 px-4 rounded-full transition-all"
                   >
                     Ver más
                   </a>

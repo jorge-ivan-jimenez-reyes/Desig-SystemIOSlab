@@ -10,7 +10,7 @@ export default function ButtonPage() {
   useEffect(() => {
     const fetchComponents = async () => {
       try {
-        const response = await fetch("http://localhost:5555/api/components");
+        const response = await fetch("http://54.163.223.205:3000/api/components");
         const data = await response.json();
         setComponents(data); // Establecer los componentes obtenidos en el estado
       } catch (error) {
