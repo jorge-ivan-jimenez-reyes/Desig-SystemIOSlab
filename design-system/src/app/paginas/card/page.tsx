@@ -13,15 +13,23 @@ interface Component {
 
 export default function CardPage() {
   const [components, setComponents] = useState<Component[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchComponents = async () => {
       try {
-        const response = await fetch("http://54.163.223.205:3000/api/components");
+        const response = await fetch("http://54.163.223.205:3002/api/components"); // Cambié a una URL absoluta
+        if (!response.ok) {
+          throw new Error(`Error al obtener los datos: ${response.statusText}`);
+        }
         const data = await response.json();
         setComponents(data);
       } catch (error) {
         console.error("Error al obtener los componentes:", error);
+        setError("No se pudieron cargar los componentes. Intenta nuevamente.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -38,9 +46,13 @@ export default function CardPage() {
           Explora las variantes de nuestras tarjetas, diseñadas para una experiencia visual única.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {components.length > 0 ? (
-            components.map((component) => (
+        {loading ? (
+          <p className="text-gray-400">Cargando componentes...</p>
+        ) : error ? (
+          <p className="text-red-400">{error}</p>
+        ) : components.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {components.map((component) => (
               <div
                 key={component.id}
                 className="bg-[#1e293b] p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-[#1e3a8a]"
@@ -65,11 +77,11 @@ export default function CardPage() {
                   </a>
                 </div>
               </div>
-            ))
-          ) : (
-            <p>Cargando componentes...</p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400">No se encontraron componentes.</p>
+        )}
       </div>
     </div>
   );

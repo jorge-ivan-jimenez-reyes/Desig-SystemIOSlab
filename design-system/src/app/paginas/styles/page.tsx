@@ -18,7 +18,7 @@ export default function StylesPage() {
   useEffect(() => {
     const fetchStyles = async () => {
       try {
-        const response = await fetch("http://54.163.223.205:3000/api/styles");
+        const response = await fetch("/api/styles");
         const data = await response.json();
         setStyles(data);
       } catch (error) {
