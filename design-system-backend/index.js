@@ -44,5 +44,5 @@ app.get("/api/colors", async (req, res) => {
 // Puerto y servidor
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
-  console.log(`Servidor corriendo en https://0.0.0.0:3001:${port}`);
+  console.log(`Servidor corriendo en http://0.0.0.0:3001:${port}`);
 });
