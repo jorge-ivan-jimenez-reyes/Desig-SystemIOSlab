@@ -8,7 +8,9 @@ const { Client } = require('@elastic/elasticsearch'); // Importa el cliente de E
 const userRoutes = require("./routes/users");
 const componentRoutes = require("./routes/components");
 const styleRoutes = require("./routes/styles");
-
+const fs = require("fs");
+const path = require("path");
+const morgan = require("morgan");
 const app = express();
 
 // Configurar CORS
@@ -102,7 +104,20 @@ app.delete("/api/elasticsearch/delete", async (req, res) => {
     res.status(500).json({ error: "Error al eliminar documento" });
   }
 });
+// Ruta de logs
+const logDirectory = "/var/log/backend";
+const logFile = path.join(logDirectory, "combined.log");
 
+// Asegúrate de que el directorio de logs existe
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory, { recursive: true });
+}
+
+// Crear un stream para escribir logs
+const accessLogStream = fs.createWriteStream(logFile, { flags: "a" });
+
+// Usar morgan para registrar logs HTTP en el archivo
+app.use(morgan("combined", { stream: accessLogStream }));
 // Puerto y servidor
 const port = process.env.PORT || 3002;
 app.listen(port, () => {
