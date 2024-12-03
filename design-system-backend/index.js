@@ -37,7 +37,7 @@ const esClient = new Client({
 // Rutas
 app.use("/api/users", userRoutes);
 app.use("/api/components", componentRoutes);
-app.use("/api/styles", styleRoutes);
+app.use("/api/style", styleRoutes);
 
 // Ruta Proxy para Colormind API
 app.get("/api/colors", async (req, res) => {
