@@ -41,7 +41,7 @@ export default function Home() {
           {/* Header */}
           <header className="text-center space-y-4">
             <h1 className="text-6xl font-bold tracking-tight drop-shadow-md flex items-center justify-center gap-3">
-              <span></span> iOS Lab Design System Bienvenidos
+              <span></span> iOS Lab Design System 
             </h1>
             <p className="text-lg text-gray-300">
               Una colección de componentes, estilos y herramientas utilizados en el laboratorio de
